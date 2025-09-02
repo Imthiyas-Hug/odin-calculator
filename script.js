@@ -74,18 +74,24 @@ digitBtns.forEach((digitBtn) => {
 })
 
 let isOperatorSet = false;
+let isClicked = false;
 operatorBtns.forEach(operatorBtn => {
     operatorBtn.addEventListener("click", (e) => {
+        if (isClicked) return;
         if (display.textContent == "") return;
         if (!operand1) {
             updateOperand1();
-            updateOperator(e)
+            updateOperator(e);
             isOperatorSet = true;
-        }else{
+            isClicked = true;
+        } else {
             updateOperand2();
-            display.textContent = operate(operand1,operator,operand2)
+            let result = operate(operand1, operator, operand2)
+            display.textContent = result;
+            operand1 = result;
+            updateOperator(e);
+            isOperatorSet = true;
         }
-        
     })
 })
 
@@ -99,8 +105,8 @@ eqaulToBtn.addEventListener("click", () => {
     if (display.textContent === "") return;
     if (operand1 == undefined) return;
     if (operator == undefined) return;
-    updateOperand2()
     if (operand2 == undefined) return;
+        updateOperand2();
     display.textContent = operate(operand1, operator, operand2);
 })
 
