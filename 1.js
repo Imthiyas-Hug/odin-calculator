@@ -59,20 +59,15 @@ operatorBtn.forEach(op => {
         }
         operator = op.textContent;
         arithmetic = e.target.textContent
-        //resultDisplay.textContent += opSymbol;
+
 
     })
 })
 
 digitBtn.forEach(digit => {
     digit.addEventListener("click", () => {
-        if (arithmetic) {
-            resultDisplay.textContent = ""
-            arithmetic = ""
-        }
         let digitNumber = digit.textContent;
-
-        resultDisplay.textContent += digitNumber;
+        populate(digitNumber);
     })
 })
 
@@ -83,9 +78,7 @@ deleteBtn.addEventListener("click", () => {
 })
 
 eqaulToBtn.addEventListener("click", () => {
-    //resultDisplay.textContent = operate(num1, operator, num2)
     calculate(num1,operator,num2)
-
 })
 
 clearBtn.addEventListener("click", () => {
@@ -97,4 +90,12 @@ clearBtn.addEventListener("click", () => {
 
 window.onload = function () {
     resultDisplay.innerHTML = "";
+}
+
+function populate(number){
+    display.textContent += number;
+}
+
+if(operand1 && operator ){
+    
 }
