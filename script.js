@@ -2,7 +2,7 @@ let operand1;
 let operator;
 let operand2;
 
-const display = document.querySelector(".display");
+const display = document.querySelector(".screen2");
 const digitBtns = document.querySelectorAll(".digitBtn")
 const operatorBtns = document.querySelectorAll(".operatorBtn")
 const deleteBtn = document.querySelector("#deleteBtn")
@@ -105,8 +105,7 @@ eqaulToBtn.addEventListener("click", () => {
     if (display.textContent === "") return;
     if (operand1 == undefined) return;
     if (operator == undefined) return;
-    if (operand2 == undefined) return;
-        updateOperand2();
+    updateOperand2();
     display.textContent = operate(operand1, operator, operand2);
 })
 
