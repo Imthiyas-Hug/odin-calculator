@@ -4,8 +4,8 @@ const digitBtns = document.querySelectorAll(".digitBtn")
 const operatorBtns = document.querySelectorAll(".operatorBtn")
 const deleteBtn = document.querySelector("#deleteBtn")
 const clearBtn = document.querySelector("#clearBtn")
-const eqaulToBtn = document.querySelector("#equalToBtn")
-
+const equalToBtn = document.querySelector("#equalToBtn")
+const chaining = document.querySelectorAll(".chaining")
 const add = function (a, b) {
 
     return a + b;
@@ -23,6 +23,7 @@ const multiply = function (a, b) {
 }
 const divide = function (a, b) {
 
+    if(b === 0) return 'Error';
     const result = a / b;
 
     const decimalPart = result.toString().split(".")[1];
@@ -52,7 +53,7 @@ const operate = function (num1, operator, num2) {
 
             return multiply(num1, num2);
 
-        case "/":
+        case "÷":
 
             return divide(num1, num2);
     }
@@ -72,27 +73,28 @@ function clearDisplay() {
 
 function populate(event) {
 
-    if(display2.innerHTML == 0){
+    if (display2.innerHTML === "0") {
 
-        clearDisplay()
+        clearDisplay();
 
     }
-    
+
     display2.textContent += event.target.textContent;
 
 }
 
+let tempOperator = "";
+
 function updateOperator(event) {
 
     tempOperator = event.target.textContent;
-    console.log(`tempOperator:${tempOperator}`);
 
 }
 
-let operand1;
-let operator;
-let operand2;
-let tempOperator;
+let operand1 = "";
+let operator = "";
+let operand2 = "";
+
 
 operatorBtns.forEach(operatorBtn => {
 
@@ -102,24 +104,13 @@ operatorBtns.forEach(operatorBtn => {
 
         updateOperator(event);
 
-        if (tempOperator) {
+        if (tempOperator && !operand1) {
 
-            if (!operand1) {
+            operand1 = getTextContent();
 
-                operand1 = getTextContent();
-                
-            }
-            
         }
 
-        display1.textContent = `${operand1} ${tempOperator}`
-
-        if(operand1 && operator){
-            
-            operand2 = getTextContent()
-            display2.textContent = operate(operand1,operator,operand2);
-            display1.textContent = ``
-        }
+        display1.textContent = `${operand1} ${tempOperator}`;
 
     })
 })
@@ -139,34 +130,23 @@ digitBtns.forEach((digitBtn) => {
         }
 
         populate(event);
-        
+
     })
 
 })
 
-deleteBtn.addEventListener("click", () => {
-
-    if (!display2.textContent == "") {
-
-        display2.textContent = display2.textContent.slice(0, -1);
-
-    }
-})
-
-eqaulToBtn.addEventListener("click", () => {
+equalToBtn.addEventListener("click", () => {
 
     if (display2.textContent === "") return;
 
-    if (operand1 == undefined) return;
+    if (operand1 == '') return;
 
-    if (operator == undefined) return;
+    if (operator == '') return;
 
     if (operand1 && operator) {
 
         operand2 = getTextContent();
-    }
-    else {
-        return;  
+
     }
 
     display2.textContent = operate(operand1, operator, operand2);
@@ -174,20 +154,33 @@ eqaulToBtn.addEventListener("click", () => {
     display1.textContent = `${operand1} ${operator} ${operand2} =`;
 
     operand1 = "";
+    operand2 = "";
+    operator = "";
 
+})
+
+deleteBtn.addEventListener("click", () => {
+
+    if (display2.textContent !== "") {
+
+        display2.textContent = display2.textContent.slice(0, -1);
+
+    }
+    else {
+        display1.textContent = "";
+    }
 })
 
 clearBtn.addEventListener("click", (e) => {
 
-    display1.innerHTML = ""
-
-    display2.innerHTML = 0;
-
-    operand1 = "";
-
-    operator = "";
-
-    operand2 = "";
+    operand1 = '';
+    operand2 = '';
+    operator = '';
+    tempOperator = '';
+    display1.innerHTML = '';
+    display1.textContent = '';
+    display2.innerHTML = '';
+    display2.textContent = "0";
 
 })
 
@@ -195,7 +188,25 @@ window.onload = function () {
 
     display1.innerHTML = '';
 
-    display2.innerHTML = "";
+    display2.innerHTML = '0';
 
 }
 
+chaining.forEach(button => {
+    button.addEventListener("click", (event) => {
+        if (operand1 && operator) {
+
+            console.log('operand2: ' + operand2);
+            operand2 = getTextContent();
+            console.log('operand2: ' + operand2);
+            console.log(operator)
+            display2.textContent = operate(operand1, operator, operand2);
+            operand1 = operate(operand1, operator, operand2);
+            display1.textContent = `${operand1} ${tempOperator}`;
+            operator = "";
+        }
+        else {
+            return;
+        }
+    })
+})
