@@ -1,35 +1,60 @@
-const display1 = document.querySelector(".screen1")
+let operand1 = "";
+let operator = "";
+let operand2 = "";
+let tempOperator = "";
+
+const display1 = document.querySelector(".screen1");
 const display2 = document.querySelector(".screen2");
 const digitBtns = document.querySelectorAll(".digitBtn")
-const operatorBtns = document.querySelectorAll(".operatorBtn")
-const deleteBtn = document.querySelector("#deleteBtn")
-const clearBtn = document.querySelector("#clearBtn")
-const equalToBtn = document.querySelector("#equalToBtn")
-const chaining = document.querySelectorAll(".chaining")
+const operatorBtns = document.querySelectorAll(".operatorBtn");
+const deleteBtn = document.querySelector("#deleteBtn");
+const clearBtn = document.querySelector("#clearBtn");
+const equalToBtn = document.querySelector("#equalToBtn");
+const chainingBtn = document.querySelectorAll(".chaining");
+const decimalBtn = document.querySelector(".decimal")
+
 const add = function (a, b) {
 
     return a + b;
 
 }
+
 const subtract = function (a, b) {
 
     return a - b;
 
 }
+
 const multiply = function (a, b) {
 
     return a * b;
 
 }
+
 const divide = function (a, b) {
 
-    if(b === 0) return 'Error';
-    const result = a / b;
+    if (b === 0) return 'Error';
 
-    const decimalPart = result.toString().split(".")[1];
-    if (decimalPart && decimalPart.length > 3) {
-        return Number(result.toFixed(3));
+    return a / b;
+
+}
+
+const roundResult = (result) => {
+
+    const resultString = result.toString();
+
+    if (resultString.includes(".")) {
+
+        const decimalPart = resultString.split(".")[1];
+
+        if (decimalPart && decimalPart.length > 3) {
+
+            return Number(result.toFixed(3));
+
+        }
+
     }
+
     return result;
 
 }
@@ -53,10 +78,108 @@ const operate = function (num1, operator, num2) {
 
             return multiply(num1, num2);
 
+        case "*":
+
+            return multiply(num1, num2);
+
         case "÷":
 
             return divide(num1, num2);
+
+        case "/":
+
+            return divide(num1, num2);
     }
+}
+
+const deleteValue = function () {
+
+    if (display2.textContent !== "") {
+
+        display2.textContent = display2.textContent.slice(0, -1);
+
+    }
+    else {
+
+        display1.textContent = "";
+
+    }
+}
+
+const clearAll = function () {
+
+    operand1 = '';
+    operand2 = '';
+    operator = '';
+    tempOperator = '';
+
+    display1.innerHTML = '';
+    display1.textContent = '';
+
+    display2.innerHTML = '';
+    display2.textContent = "0";
+
+}
+
+const chaining = function () {
+
+    if (operand1 && operator) {
+
+        operand2 = getTextContent();
+
+        display2.textContent = roundResult(operate(operand1, operator, operand2));
+
+        operand1 = roundResult(operate(operand1, operator, operand2));
+
+        display1.textContent = `${operand1} ${tempOperator}`;
+
+        operator = "";
+
+    }
+    else {
+
+        return;
+
+    }
+}
+
+const equalButton = function () {
+
+    if (display2.textContent === "") return;
+
+    if (operand1 == '') return;
+
+    if (operator == '') return;
+
+    if (operand1 && operator) {
+
+        operand2 = getTextContent();
+
+    }
+
+    display2.textContent = roundResult(operate(operand1, operator, operand2));
+
+    display1.textContent = `${operand1} ${operator} ${operand2} =`;
+
+    operand1 = "";
+    operand2 = "";
+    operator = "";
+}
+
+const decimalPoint = function () {
+
+    if (display2.textContent == "") {
+
+        display2.textContent += 0;
+
+    }
+
+    if (!display2.textContent.includes('.')) {
+
+        display2.textContent += event.target.textContent;
+
+    }
+
 }
 
 function getTextContent() {
@@ -71,7 +194,7 @@ function clearDisplay() {
 
 }
 
-function populate(event) {
+function populate(value) {
 
     if (display2.innerHTML === "0") {
 
@@ -79,22 +202,15 @@ function populate(event) {
 
     }
 
-    display2.textContent += event.target.textContent;
+    display2.textContent += value;
 
 }
 
-let tempOperator = "";
+function updateOperator(value) {
 
-function updateOperator(event) {
-
-    tempOperator = event.target.textContent;
+    tempOperator = value;
 
 }
-
-let operand1 = "";
-let operator = "";
-let operand2 = "";
-
 
 operatorBtns.forEach(operatorBtn => {
 
@@ -102,15 +218,16 @@ operatorBtns.forEach(operatorBtn => {
 
         if (!getTextContent()) return;
 
-        updateOperator(event);
+        updateOperator(event.target.textContent);
 
         if (tempOperator && !operand1) {
 
             operand1 = getTextContent();
-
         }
 
         display1.textContent = `${operand1} ${tempOperator}`;
+
+        chaining();
 
     })
 })
@@ -129,7 +246,7 @@ digitBtns.forEach((digitBtn) => {
 
         }
 
-        populate(event);
+        populate(digitBtn.textContent);
 
     })
 
@@ -137,76 +254,87 @@ digitBtns.forEach((digitBtn) => {
 
 equalToBtn.addEventListener("click", () => {
 
-    if (display2.textContent === "") return;
-
-    if (operand1 == '') return;
-
-    if (operator == '') return;
-
-    if (operand1 && operator) {
-
-        operand2 = getTextContent();
-
-    }
-
-    display2.textContent = operate(operand1, operator, operand2);
-
-    display1.textContent = `${operand1} ${operator} ${operand2} =`;
-
-    operand1 = "";
-    operand2 = "";
-    operator = "";
+    equalButton();
 
 })
 
 deleteBtn.addEventListener("click", () => {
 
-    if (display2.textContent !== "") {
-
-        display2.textContent = display2.textContent.slice(0, -1);
-
-    }
-    else {
-        display1.textContent = "";
-    }
-})
-
-clearBtn.addEventListener("click", (e) => {
-
-    operand1 = '';
-    operand2 = '';
-    operator = '';
-    tempOperator = '';
-    display1.innerHTML = '';
-    display1.textContent = '';
-    display2.innerHTML = '';
-    display2.textContent = "0";
+    deleteValue();
 
 })
 
-window.onload = function () {
+clearBtn.addEventListener("click", () => {
 
-    display1.innerHTML = '';
+    clearAll();
 
-    display2.innerHTML = '0';
+})
 
-}
+decimalBtn.addEventListener("click", event => {
 
-chaining.forEach(button => {
-    button.addEventListener("click", (event) => {
-        if (operand1 && operator) {
+    decimalPoint();
 
-            console.log('operand2: ' + operand2);
-            operand2 = getTextContent();
-            console.log('operand2: ' + operand2);
-            console.log(operator)
-            display2.textContent = operate(operand1, operator, operand2);
-            operand1 = operate(operand1, operator, operand2);
-            display1.textContent = `${operand1} ${tempOperator}`;
-            operator = "";
+})
+
+// Keyboard Support
+document.addEventListener("keydown", (event) => {
+    let key = event.key;
+
+    if (!isNaN(key)) {
+
+        if (tempOperator) {
+
+            clearDisplay();
+
+            operator = tempOperator;
+
+            tempOperator = "";
+
         }
-        else {
-            return;
+
+        populate(key)
+
+    }
+
+    if (['+', '-', '*', '/', 'x', '÷'].includes(key)) {
+
+        if (!getTextContent() || display2.textContent == "0") return;
+
+        updateOperator(key);
+
+        if (tempOperator && !operand1 && display2.textContent != "0") {
+
+            operand1 = getTextContent();
         }
-    })
+
+        display1.textContent = `${operand1} ${tempOperator}`;
+
+        chaining();
+
+    }
+
+    if (key == "=") {
+
+        equalButton();
+
+    }
+
+    if (key == "Backspace") {
+
+        deleteValue();
+
+    }
+
+    if (key == "Escape") {
+
+        clearAll();
+
+    }
+
+    if (key == '.'){
+
+        decimalPoint();
+
+    }
+
 })

@@ -8,23 +8,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     align-items: center;
     line-height: 1.6;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: linear-gradient(135deg, hsl(187, 72%, 83%), hsl(340, 80%, 84%));
 
 }
-
-.page-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin: 20px 0;
-    color: #333;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: 1px 1px 2px #ccc;
-}
-
 
 .container {
     width: 400px;
@@ -85,6 +75,7 @@ button {
 
 .digitBtn {
     background-color: hsl(135, 44%, 89%);
+    background-color: hsl(135, 44%, 79%);
     color: hsl(0, 100%, 6%);
     color: hsl(120, 100%, 1%);
     border-color: hsl(0, 0%, 99%);
@@ -94,6 +85,7 @@ button {
 .operatorBtn,
 .decimal {
     background-color: hsl(63, 57%, 87%);
+    background-color: hsl(63, 96%, 65%);
     color: hsl(299, 91%, 9%);
     border-color: hsl(298, 56%, 89%);
     font-size: 23px;
@@ -142,10 +134,12 @@ button:hover {
 
 .operatorBtn:hover {
     background-color: hsl(63, 90%, 55%);
+    background-color: hsl(63, 57%, 87%);
 }
 
 .decimal:hover {
     background-color: hsl(63, 90%, 55%);
+    background-color: hsl(63, 57%, 87%);
 }
 
 .operatorBtn:active {
@@ -166,6 +160,7 @@ button:hover {
 
 .digitBtn:hover {
     background-color: hsl(135, 44%, 79%);
+    background-color: hsl(135, 44%, 89%);
 }
 
 .digitBtn:active {
