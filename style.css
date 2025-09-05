@@ -13,7 +13,6 @@ body {
     line-height: 1.6;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: linear-gradient(135deg, hsl(187, 72%, 83%), hsl(340, 80%, 84%));
-
 }
 
 .container {
@@ -24,7 +23,6 @@ body {
     padding: 20px;
     min-height: 570px;
     background-color: hsl(209, 100%, 90%);
-
 }
 
 .display {
@@ -53,7 +51,6 @@ body {
     padding: 10px;
     font-weight: 540;
     transition: all 0.3s ease-in-out;
-
 }
 
 .buttonDisplay {
@@ -70,50 +67,44 @@ button {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: background-color 0.2s ease;
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
     font-weight: 540;
 }
 
 .digitBtn {
     background-color: hsl(135, 44%, 89%);
     background-color: hsl(135, 44%, 79%);
-    color: hsl(0, 100%, 6%);
     color: hsl(120, 100%, 1%);
-    border-color: hsl(0, 0%, 99%);
+    border-color: hsl(131, 86%, 26%);
     transition: background-color 0.2s ease;
 }
 
 .operatorBtn,
 .decimal {
-    background-color: hsl(63, 57%, 87%);
     background-color: hsl(63, 96%, 65%);
     color: hsl(299, 91%, 9%);
-    border-color: hsl(298, 56%, 89%);
+    border-color: hsl(57, 92%, 10%);
     font-size: 23px;
 }
 
 #equalToBtn {
     background-color: hsl(134, 64%, 72%);
     color: hsl(135, 91%, 4%);
-    border-color: #c3e6cb;
+    border-color: #243127;
 
 }
 
 #clearBtn {
     background-color: hsl(0, 100%, 100%);
     color: hsl(228, 94%, 6%);
-    border-color: #b8daff;
-
+    border-color: #11253a;
 }
 
 #deleteBtn {
     background-color: #f8d7da;
     color: #721c24;
-    border-color: #f5c6cb;
-
-}
-
-button:hover {
-    background-color: #dcdcdc;
+    border-color: #583b3e;
 }
 
 #clearBtn:hover {
@@ -133,12 +124,10 @@ button:hover {
 }
 
 .operatorBtn:hover {
-    background-color: hsl(63, 90%, 55%);
     background-color: hsl(63, 57%, 87%);
 }
 
 .decimal:hover {
-    background-color: hsl(63, 90%, 55%);
     background-color: hsl(63, 57%, 87%);
 }
 
@@ -159,7 +148,6 @@ button:hover {
 }
 
 .digitBtn:hover {
-    background-color: hsl(135, 44%, 79%);
     background-color: hsl(135, 44%, 89%);
 }
 
